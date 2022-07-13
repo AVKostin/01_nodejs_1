@@ -1,5 +1,5 @@
 {
-  "name": "1",
+  "name": "goit-node-hw-01",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,10 +8,22 @@
     "start": "node index",
     "start:dev": "nodemon index"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avkostin/goit-node-hw-01.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avkostin/goit-node-hw-01-cli/issues"
+  },
+  "homepage": "https://github.com/avkostin/goit-node-hw-01-cli#readme",
   "keywords": [],
-  "author": "",
+  "author": "Alex",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "commander": "^9.3.0",
+    "yargs": "^17.5.1"
   }
 }
