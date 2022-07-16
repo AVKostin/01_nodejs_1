@@ -1,10 +1,11 @@
 const fs = require("fs/promises");
 const path = require("path");
+// const { v4: uuid } = require("uuid");
 
 const contactsPath = path.join(__dirname, "contacts.json");
 
 const updateContacts = async (contacts) => {
-    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, "\t"));
 };
 
 // receive contacts
@@ -14,9 +15,9 @@ const listContacts = async () => {
 };
 
 // get contact by id
-const getContactById = async (id) => {
+const getContactById = async (contactId) => {
     const contacts = await listContacts();
-    const result = contacts.find((item) => item.id === `${id}`);
+    const result = contacts.find((item) => item.id === contactId);
     if (!result) {
         return null;
     }
@@ -24,14 +25,14 @@ const getContactById = async (id) => {
 };
 
 // delete contact by id
-const removeContact = async (id) => {
+const removeContact = async (contactId) => {
     const contacts = await listContacts();
-    const idx = contacts.findIndex((item) => item.id === `${id}`);
+    const idx = contacts.findIndex((item) => item.id === contactId);
     if (idx === -1) {
         return null;
     }
     const [removeContact] = contacts.splice(idx, 1);
-    updateContacts(contacts);
+    await updateContacts(contacts);
     return removeContact;
 };
 
@@ -39,7 +40,7 @@ const removeContact = async (id) => {
 const addContact = async (id, name, email, phone) => {
     const contacts = await listContacts();
     const newContact = {
-        id: `${id}`,
+        id,
         name,
         email,
         phone,
@@ -49,9 +50,22 @@ const addContact = async (id, name, email, phone) => {
     return newContact;
 };
 
+// update contact by id
+const updateContactById = async (id, name, email, phone) => {
+    const contacts = await listContacts();
+    const idx = contacts.findIndex((item) => item.id === id);
+    if (idx === -1) {
+        return null;
+    }
+    contacts[idx] = { id, name, email, phone };
+    await updateContacts(contacts);
+    return contacts[idx];
+};
+
 module.exports = {
     listContacts,
     getContactById,
     removeContact,
     addContact,
+    updateContactById,
 };
