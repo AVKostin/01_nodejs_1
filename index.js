@@ -1,21 +1,21 @@
 const contacts = require("./db/contacts");
 const { program } = require("commander");
 
-const invokeAction = async ({ action, id, name, email, phone }) => {
+const invokeAction = async ({ action, id: contactId, name, email, phone }) => {
     switch (action) {
         case "list":
             const allContacts = await contacts.listContacts();
             console.table(allContacts);
             break;
         case "get":
-            const oneContact = await contacts.getContactById(id);
+            const oneContact = await contacts.getContactById(contactId);
             !oneContact
-                ? console.log(`No contact with ID:"${id}"`)
+                ? console.log(`Not contact with ID:"${contactId}"`)
                 : console.log(oneContact);
             break;
         case "add":
             const newContact = await contacts.addContact(
-                `${id}`,
+                contactId,
                 name,
                 email,
                 phone,
@@ -23,9 +23,9 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
             console.log(newContact);
             break;
         case "remove":
-            const removeContact = await contacts.removeContact(id);
+            const removeContact = await contacts.removeContact(contactId);
             !removeContact
-                ? console.log(`Don't delete contact. No such ID:"${id}"`)
+                ? console.log(`Don't delete contact. No such ID:"${contactId}"`)
                 : console.log(removeContact);
             break;
 
