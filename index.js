@@ -28,7 +28,6 @@ const invokeAction = async ({ action, id: contactId, name, email, phone }) => {
                 ? console.log(`Don't delete contact. No such ID:"${contactId}"`)
                 : console.log(removeContact);
             break;
-
         default:
             console.warn("\x1B[31m Unknown action type!");
     }
